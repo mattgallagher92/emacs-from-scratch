@@ -140,7 +140,7 @@
 (use-package doom-themes
   :init (load-theme 'doom-palenight t))
 
-(use-package all-the-icons)
+(use-package nerd-icons)
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
@@ -590,6 +590,8 @@
 
 (use-package dired-single
   :commands (dired dired-jump))
+
+(use-package all-the-icons)
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
