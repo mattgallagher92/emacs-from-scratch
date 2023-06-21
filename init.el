@@ -478,6 +478,18 @@
   :config
   (pyvenv-mode 1))
 
+(setenv "DOTNET_ROOT" "/usr/share/dotnet")
+
+(use-package fsharp-mode
+  :defer t
+  :hook (fsharp-mode . lsp-deferred)
+  :ensure t)
+
+(use-package eglot-fsharp
+  :defer t
+  :hook (eglot-fsharp . lsp-deferred)
+  :ensure t)
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
