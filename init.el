@@ -72,6 +72,7 @@
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
+(custom-set-variables '(display-line-numbers-type 'visual))
 
 ;; Set frame transparency
 (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
