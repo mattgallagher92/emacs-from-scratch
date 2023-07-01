@@ -201,8 +201,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
     (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal)
-    (evil-set-initial-state 'git-commit-mode 'insert))
+    (evil-set-initial-state 'dashboard-mode 'normal))
 
   (use-package evil-collection
     :after evil
@@ -866,6 +865,26 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     :commands magit-status
     :custom
     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+  ;; evil-collection-init results in git-commit-mode's initial state being normal.
+  ;; Want it to be insert when the commit message is empty.
+  ;; Inspired by https://github.com/doomemacs/doomemacs/blob/07fca786154551f90f36535bfb21f8ca4abd5027/modules/emacs/vc/config.el#L117-L124.
+  (add-hook 'git-commit-setup-hook
+    (lambda ()
+      (when
+      (and
+          (bound-and-true-p evil-mode)
+          (not (evil-emacs-state-p))
+          (bobp)
+          (eolp))
+      (evil-insert-state))))
+
+  ;; Use commit message conventions suggested in https://cbea.ms/git-commit/.
+  (use-package git-commit
+    :hook (git-commit-mode . (lambda () (setq fill-column 72)))
+    :custom
+    (git-commit-summary-max-length 50)
+    (git-commit-style-convention-checks '(overlong-summary-line non-empty-second-line)))
 
   ;; NOTE: Make sure to configure a GitHub token before using this package!
   ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
