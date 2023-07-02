@@ -798,17 +798,10 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 To enable F# editing assistance, we use [[https://github.com/fsharp/emacs-fsharp-mode][fsharp-mode]]. I've installed fsautocomplete on my system using `dotnet tool install --global fsautocomplete`.  For some reason, the dotnet root isn't detected correctly, so the `DOTNET_ROOT` env var needs to be set for fsautocomplete to work correctly.
 
 #+begin_src emacs-lisp
-  (setenv "DOTNET_ROOT" "/usr/share/dotnet")
-
   (use-package fsharp-mode
+    :init (setenv "DOTNET_ROOT" "/usr/share/dotnet")
     :defer t
-    :hook (fsharp-mode . lsp-deferred)
-    :ensure t)
-
-  (use-package eglot-fsharp
-    :defer t
-    :hook (eglot-fsharp . lsp-deferred)
-    :ensure t)
+    :hook (fsharp-mode . lsp-deferred))
 #+end_src
 
 ** Company Mode
