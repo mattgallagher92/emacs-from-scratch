@@ -1,0 +1,136 @@
+#+title: My Emacs config
+#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
+
+* Intro
+
+This config started from the [[https://github.com/daviwil/emacs-from-scratch][Emacs from scratch]] config. It is tangled to [[./init.el][init.el]].
+
+** TODO Font size
+
+* TODO Startup performance
+
+* Package system setup
+
+ [[https://github.com/jwiegley/use-package][use-package]] is used to make it easy to automate installation and configuration of packages.
+
+#+begin_src emacs-lisp
+
+  ;; Initialize package sources
+  (require 'package)
+
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
+
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
+
+  ;; Initialize use-package on non-Linux platforms
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+
+  (require 'use-package)
+  (setq use-package-always-ensure t)
+
+#+end_src
+
+** TODO Automatic updates
+* TODO Keep folders clean
+* TODO Basic UI configuration
+** TODO Font configuration
+* Keybinding configuration
+
+[[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] enables a Vi-like modal editing experience. [[https://github.com/emacs-evil/evil-collection][evil-collection]] enables Vi-like interaction when in various Emacs modes, for example in Magit mode.
+
+#+begin_src emacs-lisp
+
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-scroll t)
+    :custom
+    (evil-undo-system 'undo-redo)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state))
+
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+
+#+end_src
+
+** TODO evil visual line motions
+** TODO evil initial states
+** TODO 'keyboard-escape-quit
+** TODO general.el
+
+* TODO UI configuration
+** TODO Themes
+** TODO Modeline
+** TODO Completion
+*** TODO which-key
+*** TODO Ivy, Counsel, Prescient
+** TODO Helpful
+
+* TODO Org Mode
+
+* Dev
+
+** Magit
+
+[[https://magit.vc/][Magit]] is awesome!
+
+#+begin_src emacs-lisp
+
+  (use-package magit
+    :commands magit-status
+    :custom
+    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+#+end_src
+
+*** TODO forge
+
+** LSP
+
+ [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]] is added so that Emacs can interact with language servers using the [[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]].
+
+#+begin_src emacs-lisp
+
+  (use-package lsp-mode
+    :commands (lsp lsp-deferred)
+    :init
+    (setq lsp-keymap-prefix "C-c l"))
+
+#+end_src
+
+*** TODO breadcrumb
+*** TODO which-key integration
+*** TODO lsp-ui
+*** TODO lsp-treemacs
+*** TODO lsp-ivy
+** TODO dap-mode
+** F#
+
+[[https://githubTo enable F# editing assistance, we use .com/fsharp/emacs-fsharp-mode][fsharp-mode]] is added for F# editing assistance. I installed fsautocomplete on my system using `dotnet tool install --global fsautocomplete`.  For some reason, the dotnet root isn't detected correctly, so the `DOTNET_ROOT` env var needs to be set for fsautocomplete to work correctly.
+
+#+begin_src emacs-lisp
+
+  (use-package fsharp-mode
+    :init (setenv "DOTNET_ROOT" "/usr/share/dotnet")
+    :defer t
+    :hook (fsharp-mode . lsp-deferred))
+
+#+end_src
+
+** TODO Company
+** TODO Projectile
+** TODO Commenting
+** TODO Rainbow delimeters
+* TODO Terminal emulators and shells
+* TODO File management
+* TODO Garbage Collection
