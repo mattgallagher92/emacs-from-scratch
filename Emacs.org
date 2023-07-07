@@ -136,6 +136,8 @@ This snippet adds elements to the UI to show position within a buffer.
 
 * TODO Org Mode
 
+* TODO Markdown config
+
 * Dev
 
 ** Magit
