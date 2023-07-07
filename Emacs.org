@@ -37,7 +37,6 @@ This config started from the [[https://github.com/daviwil/emacs-from-scratch][Em
 
 ** TODO Automatic updates
 * TODO Keep folders clean
-* TODO Basic UI configuration
 ** TODO Font configuration
 * Keybinding configuration
 
@@ -68,9 +67,68 @@ This config started from the [[https://github.com/daviwil/emacs-from-scratch][Em
 ** TODO 'keyboard-escape-quit
 ** TODO general.el
 
-* TODO UI configuration
-** TODO Themes
-** TODO Modeline
+* UI configuration
+
+This snippet declutters the UI for a more minimal look and feel.
+
+#+begin_src emacs-lisp
+
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tooltip-mode -1)
+  (set-fringe-mode 10)
+
+#+end_src
+
+This snippet removes the startup message from the first frame, and ensures that frames are maximised when opened.
+
+#+begin_src emacs-lisp
+
+  (setq inhibit-startup-message t)
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+#+end_src
+
+This snippet adds elements to the UI to show position within a buffer.
+
+#+begin_src emacs-lisp
+
+  (column-number-mode)
+
+  (global-display-line-numbers-mode t)
+  (custom-set-variables '(display-line-numbers-type 'visual))
+  (dolist (mode '(org-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+#+end_src
+
+** Theme
+
+[[https://github.com/hlissner/emacs-doom-themes][doom-themes]] provides a set of themes to choose from (see [[https://github.com/hlissner/emacs-doom-themes/tree/screenshots][screenshots]])
+
+#+begin_src emacs-lisp
+
+(use-package doom-themes
+  :init (load-theme 'doom-palenight t))
+
+#+end_src
+
+** Modeline
+
+[[https://github.com/seagle0128/doom-modeline][doom-modeline]] provides a nicer-looking modeline and comes with a lot of [[https://github.com/seagle0128/doom-modeline#customize][configuration options]].
+
+*NOTE:* Requires running =M-x nerd-icons-install-fonts= when installing on a fresh machine.
+
+#+begin_src emacs-lisp
+
+  (use-package nerd-icons)
+
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1))
+
+#+end_src
+
 ** TODO Completion
 *** TODO which-key
 *** TODO Ivy, Counsel, Prescient

@@ -32,6 +32,30 @@
   :config
   (evil-collection-init))
 
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(tooltip-mode -1)
+(set-fringe-mode 10)
+
+(setq inhibit-startup-message t)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+(column-number-mode)
+
+(global-display-line-numbers-mode t)
+(custom-set-variables '(display-line-numbers-type 'visual))
+(dolist (mode '(org-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(use-package doom-themes
+  :init (load-theme 'doom-palenight t))
+
+(use-package nerd-icons)
+
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
+
 (use-package magit
   :commands magit-status
   :custom
