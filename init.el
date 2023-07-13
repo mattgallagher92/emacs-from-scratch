@@ -16,6 +16,9 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(use-package no-littering
+  :config (no-littering-theme-backups))
+
 (use-package evil
   :init
   (setq evil-want-integration t)

@@ -36,7 +36,17 @@ This config started from the [[https://github.com/daviwil/emacs-from-scratch][Em
 #+end_src
 
 ** TODO Automatic updates
-* TODO Keep folders clean
+* Keep folders clean
+
+The [[https://github.com/emacscollective/no-littering/][no-littering]] package prevents many built-in and package-provided features from cluttering directories with additional files.
+
+#+begin_src emacs-lisp
+
+  (use-package no-littering
+    :config (no-littering-theme-backups))
+
+#+end_src
+
 ** TODO Font configuration
 * Keybinding configuration
 
