@@ -30,7 +30,8 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init))
+  (evil-collection-init)
+  (evil-select-search-module 'evil-search-module 'evil-search))
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)

@@ -58,7 +58,8 @@ This config started from the [[https://github.com/daviwil/emacs-from-scratch][Em
   (use-package evil-collection
     :after evil
     :config
-    (evil-collection-init))
+    (evil-collection-init)
+    (evil-select-search-module 'evil-search-module 'evil-search))
 
 #+end_src
 
